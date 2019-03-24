@@ -53,6 +53,22 @@ const check = (DEBUG) ? function (...args) {
 } : function () {};
 
 // JavaScript
+// test that trs is working the same as transform rotate scale together
+const trsWorks = newCheck(function (m){
+
+        let matrix = Matrix.multiply(m, Matrix.translation(-0.5,0));
+        matrix = Matrix.multiply(matrix, Matrix.rotation(45 * Math.PI / 180));
+        matrix = Matrix.multiply(matrix, Matrix.scale(0.5, 0.5));
+
+        let matrix2 = Matrix.multiply(m, Matrix.trs(-0.5,0,45 * Math.PI / 180,0.5, 0.5))
+
+        if(JSON.stringify(matrix) === JSON.stringify(matrix2)){
+                return true
+        }
+
+        return false
+});
+
 const isBoolean = newCheck(function (b) {
     return typeof b === "boolean";
 });

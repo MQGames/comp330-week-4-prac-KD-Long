@@ -22,7 +22,7 @@ class Matrix {
 
     // The identity matrix
     static identity() {
-        return new Float32Array([ 
+        return new Float32Array([
             1,0,0,  0,1,0,  0,0,1
         ]);
     }
@@ -31,8 +31,11 @@ class Matrix {
     static translation(dx, dy) {
         check(isNumber(dx, dy));
 
+        // fill this in
         return new Float32Array([
-            // fill this in
+
+            1,0,0,  0,1,0,  dx,dy,1
+
         ]);
     }
 
@@ -41,7 +44,7 @@ class Matrix {
         check(isNumber(angle));
 
         return new Float32Array([
-            // fill this in
+            Math.cos(angle),Math.sin(angle),0,  -Math.sin(angle),Math.cos(angle),0,  0,0,1
         ]);
     }
 
@@ -50,7 +53,7 @@ class Matrix {
         check(isNumber(sx, sy));
 
         return new Float32Array([
-            // fill this in
+            sx,0,0,  0,sy,0,  0,0,1
         ]);
     }
 
@@ -71,6 +74,33 @@ class Matrix {
         return m;
     }
 
+    static trs(dx, dy, angle, sx, sy){
+            //isNumber(dx)
+            //isNumber(dy)
+            //isNumber(angle)
+            //isNumber(sx)
+            //isNumber(sy)
+
+            let m = Matrix.identity();
+            m = Matrix.multiply(m,Matrix.translation(dx,dy))
+            m = Matrix.multiply(m,Matrix.rotation(angle))
+            m = Matrix.multiply(m,Matrix.scale(sx,sy))
+
+            return m;
+
+    }
+    static pp(m){
+            let str ="[\n"
+            let max =3;
+            for(let i = 0 ; i<3;i++){
+                    for(let j =i;j<m.length;j+=3){
+                          str += m[j]+", "
+                    }
+                    str+="\n"
+            }
+            str+="]"
+            //console.log(str)
+    }
 
 
     // Multiply a vector by a matrix, and return the result
@@ -89,4 +119,3 @@ class Matrix {
     }
 
 }
-
